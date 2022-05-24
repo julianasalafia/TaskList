@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Task List</string>
+    <string name="action_settings">Settings</string>
+    <string name="hint_text">write a task</string>
+</resources>
