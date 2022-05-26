@@ -1,14 +1,14 @@
 package com.cursoandroid.tasklist.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.cursoandroid.tasklist.R;
-import com.cursoandroid.tasklist.adapter.TaskAdapter;
-import com.cursoandroid.tasklist.helper.RecyclerItemClickListener;
-import com.cursoandroid.tasklist.model.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,12 +16,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
+import com.cursoandroid.tasklist.R;
+import com.cursoandroid.tasklist.adapter.TaskAdapter;
+import com.cursoandroid.tasklist.helper.DbHelper;
+import com.cursoandroid.tasklist.helper.RecyclerItemClickListener;
+import com.cursoandroid.tasklist.model.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,12 +47,12 @@ public class MainActivity extends AppCompatActivity {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Log.i("clique", "onItemClick");
+                                Log.i("click", "onItemClick");
                             }
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-                                Log.i("clique", "onLongItemClick");
+                                Log.i("click", "onLongItemClick");
                             }
 
                             @Override

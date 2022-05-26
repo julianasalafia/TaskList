@@ -1,0 +1,12 @@
+package com.cursoandroid.tasklist.helper;
+
+import com.cursoandroid.tasklist.model.Task;
+
+import java.util.List;
+
+public interface ITaskDAO {
+    public boolean save(Task task);
+    public boolean update(Task task);
+    public boolean delete(Task task);
+    public List<Task> list();
+}
