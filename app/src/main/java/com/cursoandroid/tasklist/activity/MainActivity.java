@@ -1,14 +1,16 @@
 package com.cursoandroid.tasklist.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TaskAdapter taskAdapter;
     private List<Task> taskList = new ArrayList<>();
+    private Task selectedTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,35 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-                                Log.i("click", "onLongItemClick");
+                                selectedTask = taskList.get(position);
+
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+
+                                dialog.setTitle("Confirm deletion");
+                                dialog.setMessage("Do you want to delete the task " + selectedTask.getTaskName() + "?");
+
+                                dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        TaskDAO taskDAO = new TaskDAO(getApplicationContext());
+                                        if (taskDAO.delete(selectedTask)) {
+                                            loadTaskList();
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Task deleted successfully",
+                                                    Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Error while excluding task",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+                                dialog.setNegativeButton("No", null);
+
+                                dialog.create();
+                                dialog.show();
+
                             }
 
                             @Override
