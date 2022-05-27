@@ -1,6 +1,5 @@
 package com.cursoandroid.tasklist.activity;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandroid.tasklist.R;
 import com.cursoandroid.tasklist.adapter.TaskAdapter;
-import com.cursoandroid.tasklist.helper.DbHelper;
 import com.cursoandroid.tasklist.helper.RecyclerItemClickListener;
+import com.cursoandroid.tasklist.helper.TaskDAO;
 import com.cursoandroid.tasklist.model.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -74,14 +73,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadTaskList() {
-        Task task1 = new Task();
-        task1.setTaskName("Go shopping");
-        taskList.add(task1);
-
-        Task task2 = new Task();
-        task2.setTaskName("Go for a walk");
-        taskList.add(task2);
-
+        TaskDAO taskDAO = new TaskDAO(getApplicationContext());
+        taskList = taskDAO.list();
 
         taskAdapter = new TaskAdapter(taskList);
 

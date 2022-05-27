@@ -1,12 +1,11 @@
 package com.cursoandroid.tasklist.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.cursoandroid.tasklist.R;
 import com.cursoandroid.tasklist.helper.TaskDAO;
@@ -20,6 +19,8 @@ public class AddTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+
+        editTask = findViewById(R.id.textTask);
     }
 
     @Override
@@ -34,10 +35,15 @@ public class AddTaskActivity extends AppCompatActivity {
             case R.id.itemSave:
                 TaskDAO taskDAO = new TaskDAO(getApplicationContext());
 
-                Task task = new Task();
-                task.setTaskName("Go shopping");
-                taskDAO.save(task);
-            break;
+                String taskName = editTask.getText().toString();
+
+                if (!taskName.isEmpty()) {
+                    Task task = new Task();
+                    task.setTaskName(taskName);
+                    taskDAO.save(task);
+                    finish();
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -2,11 +2,13 @@ package com.cursoandroid.tasklist.helper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.cursoandroid.tasklist.model.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskDAO implements ITaskDAO {
@@ -46,6 +48,22 @@ public class TaskDAO implements ITaskDAO {
 
     @Override
     public List<Task> list() {
-        return null;
+        List<Task> tasks = new ArrayList<>();
+
+        String sql = "SELECT * FROM " + DbHelper.TABLE_TASKS + " ;";
+        Cursor c = read.rawQuery(sql, null);
+
+        while (c.moveToNext()) {
+            Task task = new Task();
+
+            Long id = c.getLong(c.getColumnIndex("id"));
+            String taskName = c.getString(c.getColumnIndex("name"));
+
+            task.setId(id);
+            task.setTaskName(taskName);
+
+            tasks.add(task);
+        }
+        return tasks;
     }
 }
